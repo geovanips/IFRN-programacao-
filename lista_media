@@ -1,0 +1,25 @@
+quantidade=int(input("Digite a quantidade de alunos:"))
+alunos=[]
+for i in range(0,quantidade):
+    nome = input("Digite o nome do {}º aluno".format(i))
+    media = float(input("Digite a media do {}º aluno".format(i)))
+    #adiciona na lista o nome e a media
+    alunos.append(nome,media)
+
+soma = aprovados = reprovados = recuperacao = 0
+for a in alunos:
+  soma+=a[i]
+  if a[1] >=7:
+    situacao = "aprovado"
+    aprovados += 1
+  elif a[1]<3:
+    situacao= "reprovado"
+    reprovados += 1
+  else:
+    situacao = "recuperacao"
+    recuperacao += 1
+  print("{} {} {}".format(a(0),a(1),situacao))
+print("Aprovados:",aprovados)
+print("recuperacao:", recuperacao)
+print("reprovados:",reprovados)
+print("Media: {:.2f}".format(soma /quantidade))
