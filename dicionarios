@@ -1,0 +1,41 @@
+#dicionarios
+dic = {
+    "nome": "Felipe",
+    "curso": "Ciencia da Computação",
+    "notas": (9.8, 8.1),
+    "idade": 21,
+    "endereco": {"rua": "Av. da progamação","numero": 123}
+}
+#Acessando os valores
+print(dic)
+print(dic["nome"])
+print(dic["idade"])
+print(dic["notas"])
+print(dic["notas"][0])
+print(dic["notas"][1])
+print(dic["endereco"]["rua"])
+#numero de elementos do dicionario da cadeia principal
+print(len(dic))
+#alteração de valores
+dic["endereco"]["numero"] = 365
+print(dic["endereco"])
+#remove uma chave pode ser pop o del
+del dic["idade"]
+print(dic)
+#testa se uma chave esta no dicionario
+print("idade" in dic)
+print("notas" in dic)
+print("idade" not in dic)
+#Pegando valores das chaves
+print(dic.get("nome"))
+print(dic["nome"])
+print(dic.get("idade"))
+print(dic["idade"]) #erro se a chave nao existe
+#pegando conjunto de valores
+print("Chaves: {}".format(dic.keys()))
+print("Chaves: {}".format(dic.values()))
+#Adicionando novo valor, se ja existir ele atualiza, caso nao é criado
+dic["email"] = "felipe.pinto@ifrn.edu.br"
+#imprimindo o dicionario manualmente
+for chave in dic.keys():
+    print("{}".format(chave, dic[chave]))
