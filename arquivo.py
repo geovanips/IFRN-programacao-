@@ -1,4 +1,5 @@
 #Modulo arquivo
+#funções de salvar,listar e buscar contato
 
 def salvar_contato(nomec , telefonec, emailc):
     arquivo = open("contatos.txt", "a", encoding="utf-8")
