@@ -5,4 +5,5 @@ def ler_opcao():
     print("0 - Sair do programa")
     print("1 - Cadastrar um novo contato")
     print("2 - Listar os contatos cadastrados")
+    print("3 - Buscar contato")
     return int(input(">> "))
