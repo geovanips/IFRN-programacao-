@@ -20,3 +20,16 @@ def listar_contatos():
         print("--------------------")
         # sempre ao abrir algum arquivo deve fechar
     arquivo.close()
+def buscar_contatos():
+    contato=input("Digite o nome do contato: ")
+    arquivo = open("contatos.txt", "r", encoding="utf-8")
+    for linha in arquivo:
+        # split quebra a alinha aonde estiver o caractere entre parenteses.
+        campos = linha[:-1].split(";")
+        if contato == campos[0]:
+            print("Nome: ", campos[0])
+            print("Telefone:", campos[1])
+            print("Email:", campos[2])
+            print("--------------------")
+            # sempre ao abrir algum arquivo deve fechar
+    arquivo.close()
