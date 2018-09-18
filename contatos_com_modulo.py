@@ -14,5 +14,7 @@ while True:
         arquivo.salvar_contato(nome, telefone, email)
     elif opcao == 2:
         arquivo.listar_contatos()
+    elif opcao == 3:
+        arquivo.buscar_contatos()
     else:
         print("Opção invalida, tente novamente")
