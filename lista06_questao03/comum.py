@@ -1,0 +1,5 @@
+ENCODING = "utf-8"
+P_NUM = "!20s f f"
+p_resposta = "!20s f f f f f"
+p_quantidadeProduto = "!i"
+p_request = "!i"
