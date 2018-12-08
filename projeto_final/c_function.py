@@ -1,57 +1,35 @@
-import sqlite3
+import requests
+def adicionarContato():
+    campos = [
+        "nome",
+        "sobrenome",
+        "celular",
+        "email",
+        "aniversario"
+    ]
+    contato = {}
+    for campo in campos:
+        contato[campo] = input("Informe o {} do contato: ".format(campo))
+    resposta = requests.get("http://127.0.0.1:83/adicionarContato/", json=contato).json()
+    if resposta:
+        for msg in resposta:
+            print("Mensagem de {}: {}".format(msg, resposta[msg]))
 
-bancoDeDados = 'database/contatos.db'
-
-#adicionarContato
-def inserirContato(contato):
-    nome, sobrenome, celular, email, aniversario = contato.values()
-
-    with sqlite3.connect(bancoDeDados) as conexao_db:
-        cursor = conexao_db.cursor()
-
-        cursor.execute("SELECT celular, email from contatos WHERE celular = ? OR email = ?;", (celular, email))
-        dadosDoContato = cursor.fetchone()
-
-        if dadosDoContato == None:
-            cursor.execute("INSERT INTO contatos (nome, sobrenome, celular, email, aniversario) VALUES (?, ?, ?, ?, ?);", (nome, sobrenome, celular, email, aniversario))
-            conexao_db.commit()
-            return {'sucesso': 'O contato foi salvo!'}
-        else:
-            celularContato, emailContato = dadosDoContato
-
-            if celularContato == celular and emailContato == email:
-                return {'insucesso': 'O celular e o email já existe na agenda!'}
-            elif celularContato == celular:
-                return {'insucesso': 'O celular já existe na agenda!'}
-            elif emailContato == email:
-                return {'insucesso': 'O email já existe na agenda!'}
-
-
-#consultarContato
-def buscarContato(nome):
-    with sqlite3.connect(bancoDeDados) as conexao_db:
-        cursor = conexao_db.cursor()
-        #cursor.execute("SELECT nome, sobrenome, email from contatos WHERE nome LIKE ? OR email = ?;", (nome,nome, ))
-        cursor.execute("SELECT * from contatos WHERE nome LIKE '%{}%' OR email = '%{}%';".format(nome, nome))
-        dadosDoContato = cursor.fetchall()
-        print(dadosDoContato)
-        if dadosDoContato == None:
-            return {'insucesso': 'O contato não foi encontrado na agenda!'}
-        else:
-            agenda = []
-            for contato in dadosDoContato:
-                id, nome, sobrenome, celular, email, aniversario = contato
-                agenda.append({"nome": nome, "sobrenome":sobrenome, "celular":celular, "email":email, "aniversario":aniversario})
-            return agenda
-#removerContato
-
-def removerContato(email):
-    with sqlite3.connect(bancoDeDados) as conexao_db:
-        cursor = conexao_db.cursor()
-        try:
-            cursor.execute("delete from contatos where email = '{}'".format(email))
-            conexao_db.commit()
-            return {'sucesso': 'O contato foi removido'}
-        except sqlite3.Error as erro:
-            print(erro)
-            return {'insucesso': 'Contato não foi removido'}
+def home():
+    resposta = requests.get("http://127.0.0.1:83/").json()
+    return resposta
+def consultarContato():
+    print("Digite nome ou email:")
+    opcao = input(">>")
+    resposta = requests.get("http://127.0.0.1:83/consultarContato/{}".format(opcao)).json()
+    print("Contato(s):")
+    for e in resposta:
+        print("Nome: {} {}\n Celular: {}\n Email: {}\n Aniversario: {}".format(e["nome"], e["sobrenome"], e["celular"],
+                                                                               e["email"], e["aniversario"]))
+        print("------------------------")
+def removerContato():
+    email = input("Digite o email do contato para remover: ")
+    resposta = requests.get("http://127.0.0.1:83/removerContato/{}".format(email)).json()
+    if resposta:
+        for msg in resposta:
+            print("Mensagem de {}: {}".format(msg, resposta[msg]))
